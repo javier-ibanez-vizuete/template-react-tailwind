@@ -1,12 +1,37 @@
-# React + Vite
+# Guía de instalación y configuración
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Después de clonar este repositorio desde GitHub, sigue los siguientes pasos para configurar el entorno de desarrollo:
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 1. Instalar dependencias
 
-## Expanding the ESLint configuration
+Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install -D @eslint/js @types/react @types/react-dom @vitejs/plugin-react autoprefixer eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-unused-imports globals json-server vite
+```
+
+📌 Este comando instalará todas las dependencias de desarrollo indicadas en el `package.json`.
+
+---
+
+## 2. Ejecutar el servidor de desarrollo
+
+Para iniciar el servidor de desarrollo con Vite, utiliza:
+
+```bash
+npm run dev
+```
+
+---
+
+## 3. Ejecutar JSON Server (opcional)
+
+Si necesitas mockear una API con `json-server`, puedes arrancarlo con:
+
+```bash
+npx json-server --watch db.json --port 3000
+```
+
+_(Asegúrate de que exista un archivo `db.json` en la raíz del proyecto o cámbialo por el nombre de tu archivo)._
