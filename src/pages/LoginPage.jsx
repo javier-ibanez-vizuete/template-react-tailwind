@@ -1,95 +1,100 @@
-import { useContext, useState } from "react";
-import { BackButton } from "../components/UI/BackButton";
-import { LanguageContext } from "../contexts/LanguageContext";
-import { AuthContext } from "../contexts/AuthContext";
-import { usePassWordVisibility } from "../hooks/usePasswordVisibility";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { CustomInput } from "../components/CustomInput";
+import { useState } from "react";
+import { Container } from "../components/Container";
+import { FormInput } from "../components/FormInput";
+import { Button } from "../components/UI/Button";
+import { useAuth } from "../core/auth/useAuth";
+import { LoginVerificationFields } from "../helpers/FieldsVerificator";
 
-const INITIAL_LOGIN_DATA = {
-	email: "",
-	password: "",
+const INITIAL_FORM_DATA = {
+    email: "",
+    password: "",
 };
 
+const LOGIN_FIELDS = [
+    {
+        containerClass: "flex flex-col gap-2",
+        input: {
+            id: "email",
+            name: "email",
+            type: "email",
+            placeholder: "user@user.com",
+            required: true,
+        },
+        label: {
+            text: "Email",
+            className: "",
+        },
+    },
+    {
+        containerClass: "flex flex-col gap-2",
+        input: {
+            id: "password",
+            name: "password",
+            type: "password",
+            placeholder: "1234",
+            required: true,
+        },
+        label: {
+            text: "Contraseña",
+            className: "",
+        },
+    },
+];
+
 export const LoginPage = () => {
-	const [loginData, setLoginData] = useState(INITIAL_LOGIN_DATA);
-	const [errorKey, setErrorKey] = useState("");
+    const [form, setForm] = useState(INITIAL_FORM_DATA);
+    const { login } = useAuth();
+    const [error, setError] = useState("");
 
-	const { getText } = useContext(LanguageContext);
-	const { userLogin } = useContext(AuthContext);
+    const onInputChange = (event) => {
+        const { name, value } = event.target;
 
-	const passwordView = usePassWordVisibility();
-	const navigate = useNavigate();
+        setError("");
+        setForm((prevValue) => ({ ...prevValue, [name]: value }));
+    };
 
-	const { email, password } = loginData;
+    const onLoginSubmit = async (event) => {
+        event.preventDefault();
 
-	const onInputChange = (event) => {
-		const { name, value } = event.target;
+        const isError = LoginVerificationFields(form);
+        if (isError) return setError(isError);
 
-		setErrorKey("");
-		setLoginData((prevValue) => ({ ...prevValue, [name]: value }));
-	};
+        await login(form);
+        setForm(INITIAL_FORM_DATA);
+    };
 
-	const onFormSubmit = (event) => {
-		event.preventDefault();
+    return (
+        <Container className="flex flex-col flex-1 items-center">
+            <div className="flex flex-col gap-md bg-white">
+                <h2 className="">INICIAR SESION</h2>
 
-		const { email, password } = loginData;
+                <form className="flex flex-col gap-md" onSubmit={onLoginSubmit}>
+                    {LOGIN_FIELDS.map(({ label, input, containerClass }) => (
+                        <FormInput
+                            key={input.id}
+                            containerClass={containerClass}
+                            input={{
+                                id: input.id,
+                                name: input.name,
+                                type: input.type,
+                                placeholder: input.placeholder,
+                                value: form[input.name],
+                                onChange: onInputChange,
+                                required: input.required,
+                            }}
+                            label={{
+                                text: label.text,
+                                className: label.className,
+                            }}
+                        />
+                    ))}
 
-		if (!email) return setErrorKey("noEmailField");
-		if (!password) return setErrorKey("nopasswordField");
-
-		const loginUser = userLogin(loginData);
-		if (!loginUser) return setErrorKey("emailOrPasswordError");
-		return navigate("/");
-	};
-
-	return (
-		<section className="flex flex-1 flex-col gap-4">
-			<BackButton />
-
-			<h1>LOG IN</h1>
-
-			<form action="#" method="get" onSubmit={onFormSubmit}>
-				<CustomInput inputName={"email"} labelName={"LABELINPUTEMAIL"}>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						value={email}
-						onChange={onInputChange}
-						placeholder="PlaceholderINPUTEMAIL"
-						className="p-2 rounded-sm text-sm placeholder:opacity-70"
-					/>
-				</CustomInput>
-				<CustomInput inputName={"password"} labelName={"LABELINPUTPASSWORD"}>
-					<div className="flex items-center">
-						<input
-							type={passwordView.visible ? "text" : "password"}
-							name="password"
-							id="password"
-							value={password}
-							onChange={onInputChange}
-							placeholder="PLACEHOLDER inputPassword"
-							className="flex-1 p-2 rounded-sm text-sm placeholder:opacity-70"
-						/>
-					</div>
-				</CustomInput>
-				<div className="flex flex-col gap-2">
-					{errorKey && <small className="text-sm text-red-600 italic opacity-50">MENSAJE DE ERROR</small>}
-					<button
-						className="p-2 bg-blue-500 rounded-md shadow-md cursor-pointer hover:translate-y-[-2px] hover:shadow-lg transition"
-						type="submit"
-					>
-						BOTON INICIAR SESION
-					</button>
-					<div>
-						¿No tienes cuenta?{" "}
-						<Link className="cursor-pointer text-blue-500" to={"/register"}>
-							Registrarse
-						</Link>
-					</div>
-				</div>
-			</form>
-		</section>
-	);
+                    {error && <h3>{error}</h3>}
+                    <Button type="submit" className="w-full mt-2 justify-center rounded-full">
+                        Entrar
+                    </Button>
+                </form>
+            </div>
+        </Container>
+    );
 };

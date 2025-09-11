@@ -3,41 +3,44 @@
 html,
 body,
 #root {
-	height: 100%;
+    height: 100%;
 }
 
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	margin: 0;
-	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
 
 @theme {
-	--font-title: ;
-	--font-sans: ;
+    --font-title: ;
+    --font-sans: ;
 
-	--text-h1: ;
-	--text-h2: ;
-	--text-h3: ;
-	--text-h4: ;
-	--text-h5: ;
-	--text-h6: ;
+    --text-h1: ;
+    --text-h2: ;
+    --text-h3: ;
+    --text-h4: ;
+    --text-h5: ;
+    --text-h6: ;
 
-	/* 🎨 Color primario */
-	--color-primary: ;
-	--color-primary-hover: ;
-	--color-primary-pressed: ;
+    /* 🎨 Color primario */
+    --color-primary: ;
+    --color-primary-hover: ;
+    --color-primary-pressed: ;
 
-	--spacing-xs: ;
-	--spacing-sm: ;
-	--spacing-md: ;
-	--spacing-lg: ;
-	--spacing-xl: ;
-	--spacing-2xl: ;
-	--spacing-3xl: ;
+    --spacing-xs: 4px;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+    --spacing-2xl: 60px;
+    --spacing-3xl: 100px;
+    --spacing-element-width-sm: 370px;
+    --spacing-element-width-md: 420px;
+    --spacing-element-width-lg: 630px;
 }
 
 /* h1 {
