@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const baseURL = "https:// react-students-api-eleven-code.vercel.app/api";
+// BASE URL DE JSON SERVER
+// const baseURL = "http://localhost:3000";
 
 export const api = axios.create({
     baseURL, // URL BASE

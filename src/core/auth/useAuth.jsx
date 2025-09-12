@@ -23,7 +23,7 @@ export const useAuth = () => {
             saveTokenInLocalStorage(authData.token);
             saveUserInLocalStorage(authData.user);
             setUser(authData.user);
-            navigate("/", { replace });
+            navigate("/", { replace: true });
             return;
         }
 

@@ -1,7 +1,7 @@
 {
     "users": [
         {
-            "id": 1,
+            "id": "1",
             "name": "admin",
             "email": "admin@admin.com",
             "password": "adminadmin",
@@ -9,5 +9,11 @@
             "active": false
         }
     ],
-    "posts": [{ "id": 1, "title": "Hola mundo", "content": "Mi primer post" }]
+    "posts": [
+        {
+            "id": "1",
+            "title": "Hola mundo",
+            "content": "Mi primer post"
+        }
+    ]
 }
